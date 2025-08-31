@@ -4,8 +4,10 @@ from datetime import datetime
 from urllib import error, parse, request
 
 from fastapi import FastAPI
+from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Literal, Optional
 
 app = FastAPI()
 app.add_middleware(
@@ -148,26 +150,19 @@ def ensure_frontmatter(
     return "\n".join(frontmatter_lines) + "\n" + content
 
 
-class PadPostRequest(BaseModel):
-    text: str
+class PadRequest(BaseModel):
+    action: Literal["get", "set"]
+    chat_id: str
+    text: Optional[str] = None
 
 
-@app.get("/pad/{chat_id}")
-def get_pad(chat_id: str) -> dict:
-    content = read_pad_text(chat_id)
-    # return {"text": ensure_frontmatter(chat_id, content)}
-    return {"text": content}
-
-
-@app.post("/pad/{chat_id}")
-def pad_action(chat_id: str, req: PadPostRequest) -> dict:
-    # Get old content length before writing
-    # old_content = read_pad_text(chat_id)
-    write_pad_text(chat_id, req.text)
-    # return {"ok": True, "text": ensure_frontmatter(chat_id, req.text, old_content)}
+@app.post("/pad")
+def pad(req: PadRequest) -> dict:
+    if req.action == "get":
+        content = read_pad_text(req.chat_id)
+        return {"text": content}
+    # action == "set"
+    if req.text is None or req.text.strip() == "":
+        raise HTTPException(status_code=400, detail="text must be non-empty when action is set")
+    write_pad_text(req.chat_id, req.text)
     return {"ok": True, "text": req.text}
-
-
-@app.get("/hi")
-def hi() -> dict:
-    return {"ok": True}
