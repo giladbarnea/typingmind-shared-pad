@@ -2,6 +2,8 @@
 	"id": "shared_pad",
 	"uuid": "4b0ecb8a-3a76-4f23-91a3-0d89d4b59d10",
 	"title": "Shared Pad",
+		"name": "shared_pad",
+		"description": "Read or overwrite a persistent shared plain-text pad.",
 	"emoji": "🗒️",
 	"version": 1,
 	"implementationType": "http",
