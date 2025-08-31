@@ -5,7 +5,8 @@ from urllib import error, parse, request
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Literal, Annotated
 
 app = FastAPI()
 app.add_middleware(
@@ -148,26 +149,24 @@ def ensure_frontmatter(
     return "\n".join(frontmatter_lines) + "\n" + content
 
 
-class PadPostRequest(BaseModel):
-    text: str
+class GetPadRequest(BaseModel):
+    action: Literal["get"]
+    chat_id: str
 
 
-@app.get("/pad/{chat_id}")
-def get_pad(chat_id: str) -> dict:
-    content = read_pad_text(chat_id)
-    # return {"text": ensure_frontmatter(chat_id, content)}
-    return {"text": content}
+class SetPadRequest(BaseModel):
+    action: Literal["set"]
+    chat_id: str
+    text: str = Field(min_length=1)
 
 
-@app.post("/pad/{chat_id}")
-def pad_action(chat_id: str, req: PadPostRequest) -> dict:
-    # Get old content length before writing
-    # old_content = read_pad_text(chat_id)
-    write_pad_text(chat_id, req.text)
-    # return {"ok": True, "text": ensure_frontmatter(chat_id, req.text, old_content)}
+PadRequest = Annotated[GetPadRequest | SetPadRequest, Field(discriminator="action")]
+
+
+@app.post("/pad")
+def pad(req: PadRequest) -> dict:
+    if isinstance(req, GetPadRequest):
+        content = read_pad_text(req.chat_id)
+        return {"text": content}
+    write_pad_text(req.chat_id, req.text)
     return {"ok": True, "text": req.text}
-
-
-@app.get("/hi")
-def hi() -> dict:
-    return {"ok": True}
