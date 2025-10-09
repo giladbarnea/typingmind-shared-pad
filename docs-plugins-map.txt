@@ -1,0 +1,55 @@
+# TypingMind Plugins Links Map
+
+https://docs.typingmind.com/plugins
+https://docs.typingmind.com/plugins/share-import-plugins
+https://docs.typingmind.com/plugins/build-a-typingmind-plugin/plugins-update-apr-15-2024
+https://docs.typingmind.com/plugins/user-contributed-plugins
+
+https://docs.typingmind.com/plugins/build-a-typingmind-plugin#25028e3c3fbb4c01aceb17ca7cc8b493
+https://docs.typingmind.com/plugins/create-a-plugin-server-url
+
+https://docs.typingmind.com/plugins/build-a-typingmind-plugin
+
+
+https://docs.typingmind.com/plugins/use-typingmind-plugin
+https://docs.typingmind.com/plugins/oauth-2.0-authentication-for-plugins
+
+https://docs.typingmind.com/plugins/web-page-reader
+
+https://docs.typingmind.com/plugins/server-side-vs.-client-side-plugin
+
+https://docs.typingmind.com/plugins/plugins-server/how-to-deploy-plugins-server-on-render
+
+---
+Reading https://github.com/TypingMind/plugins-server
+
+how-to-deploy-plugins-server-on-render
+
+build-a-typingmind-plugin
+
+---
+
+Has backend but no httpAction: 
+https://github.com/TypingMind/plugin-web-page-reader
+
+Client:
+- https://raw.githubusercontent.com/TypingMind/plugin-web-page-reader/main/README.md
+- https://raw.githubusercontent.com/TypingMind/plugin-web-page-reader/main/implementation.js
+- https://raw.githubusercontent.com/TypingMind/plugin-web-page-reader/main/plugin.json
+
+Backend:
+- https://raw.githubusercontent.com/TypingMind/plugins-server/blob/main/src/routes/webPageReader/webPageReaderRouter.ts
+- https://raw.githubusercontent.com/TypingMind/plugins-server/blob/main/src/routes/webPageReader/webPageReaderModel.ts
+
+---
+
+Has backend and httpAction:
+https://github.com/TypingMind/plugin-excel-generator
+
+Client:
+- https://raw.githubusercontent.com/TypingMind/plugin-excel-generator/blob/main/README.md
+- https://raw.githubusercontent.com/TypingMind/plugin-excel-generator/main/plugin.json
+
+Backend:
+- https://raw.githubusercontent.com/TypingMind/plugins-server/blob/main/src/routes/excelGenerator/excelGeneratorRouter.ts
+- https://raw.githubusercontent.com/TypingMind/plugins-server/blob/main/src/routes/excelGenerator/excelGeneratorModel.ts
